@@ -1,19 +1,41 @@
 package test;
 
+import java.sql.*;
 import java.util.*;
 
-import com.sun.xml.internal.ws.server.ServiceDefinitionImpl;
+import pool.DBConstant;
 
-import dao.*;
-import service.MemberServiceImpl;
 public class Test {
-public static void main(String[] args) {
-	List<String> list = TestDAO.getInstance().getAge();
-	System.out.println(MemberDAOImpl.getInstance().selectMemberList().get(1).getName());
-	/*age 를 몇년생인지 추출
-	1998년생 남자
-	980000-1
-	98+00+00+1
-	980504-1*/
-}
+	public static void main(String[] args) {
+		List<String> list = TestDAO.getInstance().getAge();
+		try {
+			Class.forName(DBConstant.ORACLE_DRIVER);
+			Connection conn = DriverManager.getConnection(
+					DBConstant.CONNECTION_URL,
+					DBConstant.UID,
+					DBConstant.PWD);
+			Statement stmt = conn.createStatement();
+			for(int i =0;i<list.size();i++) {
+				stmt.executeQuery(
+						String.format(
+								"UPDATE MEMBER "
+								+"SET SSN ='%s' "
+								+"WHERE MEMID LIKE '%s'", 
+								String.valueOf(
+										(119-Integer.parseInt(list.get(i).split("/")[1])
+										)					
+									)
+									+String.format("%02d", (int)((Math.random()*12)+1))
+									+String.format("%02d", (int)((Math.random()*30)+1))
+									+"-"
+									+String.format("%d", (int)((Math.random()*2)+1)),
+								list.get(i).split("/")[0]
+						)
+				);
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(list);
+	}
 }

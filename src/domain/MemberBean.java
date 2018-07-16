@@ -3,6 +3,24 @@ package domain;
 public class MemberBean {
 
 
+	@Override
+	public String toString() {
+		return "회원정보 [ssn=" + ssn + ", memId=" + memId + ", teamId=" + teamId + ", name=" + name + ", roll="
+				+ roll + ", userid=" + userid + ", password=" + password + ", updatePassword=" + updatePassword
+				+ ", getUpdatePassword()=" + getUpdatePassword() + ", getSsn()=" + getSsn() + ", getMemId()="
+				+ getMemId() + ", getTeamId()=" + getTeamId() + ", getName()=" + getName() + ", getRoll()=" + getRoll()
+				+ ", getUserid()=" + getUserid() + ", getPassword()=" + getPassword() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+	public String getUpdatePassword() {
+		return updatePassword;
+	}
+
+	public void setUpdatePassword(String updatePassword) {
+		this.updatePassword = updatePassword;
+	}
+
 	public String getSsn() {
 		return ssn;
 	}
@@ -59,6 +77,6 @@ public class MemberBean {
 		this.password = password;
 	}
 
-	private String ssn, memId, teamId, name, roll, userid, password;
+	private String ssn, memId, teamId, name, roll, userid, password, updatePassword;
 	
 }

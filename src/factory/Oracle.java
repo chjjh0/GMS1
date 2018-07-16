@@ -1,24 +1,31 @@
 package factory;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
-import pool.DBConstant;
 public class Oracle implements Database{
+	private Connection conn;
+	private String driver,url,id,pass;
+	public Oracle(String driver,
+			String url,String id,String pass) {
+		this.driver=driver;
+		this.url=url;
+		this.id=id;
+		this.pass=pass;
+	}
 	@Override
 	public Connection getConnection() {
 		Connection conn = null;
 		try {
-				Class.forName(DBConstant.ORACLE_DRIVER);
-				conn = DriverManager.getConnection(
-						DBConstant.CONNECTION_URL,
-						DBConstant.UID,
-						DBConstant.PWD);		
-				//stmt = conn.createStatement();
+			Class.forName(driver);
+			conn = DriverManager.getConnection(
+					url,
+					id,
+					pass
+					);
 		} catch (Exception e) {
-				e.printStackTrace();
-		} 
+			e.printStackTrace();
+		}
 		return conn;
 	}
+
 }
